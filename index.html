@@ -4,7 +4,30 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<style>
+			#id-canvas {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%, -50%);
+				border: 1px solid black;
+			}
+		</style>
 		<title>游戏框架-演示</title>
 	</head>
-	<body></body>
+	<body>
+		<canvas id="id-canvas" data-width data-height></canvas>
+	</body>
+	<!-- 基础内容 -->
+	<script src="./config.js"></script>
+	<script src="./utils.js"></script>
+	<!-- 基础元素 -->
+	<script src="./basis/baseElement.js"></script>
+	<script src="./basis/baseScene.js"></script>
+	<script src="./basis/gameStartScene.js"></script>
+	<script src="./basis/baseGame.js"></script>
+	<!-- 游戏本体 -->
+	<script src="./blockGame/BlockGame.js"></script>
+	<!-- 程序入口 -->
+	<script src="./main.js"></script>
 </html>
