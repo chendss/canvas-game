@@ -1,13 +1,7 @@
 class GameStartScene extends BaseScene {
 	constructor(...args) {
 		super(...args)
-  }
-  
-  startGame=()=>{
-    this.registerAction('k',()=>{
-      
-    })
-  }
+	}
 
 	draw = () => {
 		const x = config.width / 2

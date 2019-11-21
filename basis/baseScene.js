@@ -1,20 +1,20 @@
 class BaseScene {
 	/**
 	 * @param {*} resources 资源文件
-	 * @param {Array<BaseElement>} elements 元素集合
 	 * @memberof BaseScene
 	 */
-	constructor(resources = {}, elements = []) {
+	constructor(resources = {}) {
 		this.resources = resources
-		this.elements = elements
+		this.elementDict = {}
 		this.imgDict = {}
 		this.actions = {}
 		this.gameContext = null
 		this.status = null
+		this.keydowns = {}
 	}
 
 	/**
-	 * 注册场景///执行函数
+	 * 注册场景 控制元素的执行函数
 	 *
 	 * @memberof BaseScene
 	 */
@@ -41,5 +41,15 @@ class BaseScene {
 		await this.loadFileResources()
 		this.gameContext = gameContext
 		log('场景加载', this.imgDict)
+	}
+
+	drawBase = callback => {
+		const elementDict = this.elementDict
+		for (let ele of Object.values(elementDict)) {
+			const { x, y, path } = ele
+			const img = this.imgDict[path]
+			callback && callback(ele)
+			this.gameContext.drawImage(img, x, y)
+		}
 	}
 }

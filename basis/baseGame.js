@@ -1,20 +1,42 @@
 class BaseGame {
 	/**
 	 *
-	 * @param {Array<BaseScene>} sceneList 场景实例集合
+	 * @param {object} sceneDict 场景实例集合
+	 * @param {object} canvas 实例
+	 * @param {object} context context 画布
 	 * @memberof BaseGame
 	 */
-	constructor(sceneList = []) {
-		this.sceneList = sceneList.concat([new GameStartScene()])
-		this.scene = this.sceneList[0]
-		this.canvas = document.querySelector('#id-canvas')
-		this.context = this.canvas.getContext('2d')
-    this.runPointer = null
-    this.sceneIndex = 0
+	constructor(canvas, context, sceneDict = {}) {
+		this.sceneDict = { ...sceneDict }
+		this.sceneDict.start = new GameStartScene()
+		this.canvas = canvas
+		this.context = context
+		this.runPointer = null
+		this.sceneKey = 'start'
+		this.actions = {}
+		this.status = 'wait' // wait-等待开始,ing-进行中 游戏状态
+		this.init()
+	}
+
+	get scene() {
+		return this.sceneDict[this.sceneKey]
 	}
 
 	get gameSpeed() {
 		return 1000 / config.fps
+	}
+
+	changeScene = sceneKey => {
+		this.sceneKey = sceneKey
+	}
+
+	/**
+	 * 注册游戏控制场景的逻辑
+	 *
+	 * @memberof BaseScene
+	 */
+	registerAction = (key, callback) => {
+		this.actions[key] = callback
 	}
 
 	clearReact = () => {
@@ -38,7 +60,7 @@ class BaseGame {
 	}
 
 	loadScene = async () => {
-		for (let scene of this.sceneList) {
+		for (let scene of Object.values(this.sceneDict)) {
 			await scene.init(this.context)
 		}
 	}
