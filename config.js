@@ -1,11 +1,11 @@
 const config = {
   fps: 60,
-  width: 600,
-  height: 700,
+  width: 700,
+  height: 600,
   debug: true,
   blockGame: {
     paddle: {
-      speedX: 5,
+      speedX: 8,
     },
     ball: {
       speedX: 8,

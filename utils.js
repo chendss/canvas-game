@@ -34,9 +34,9 @@ const randomRange = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-const randomCoordinate = function () {
-  const maxX = config.width
-  const maxY = config.height
+const randomCoordinate = function (w, h) {
+  const maxX = w || config.width
+  const maxY = h || config.height
   const result = [randomRange(0, maxX), randomRange(0, maxY)]
   return result
 }

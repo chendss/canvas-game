@@ -6,7 +6,5 @@ class Ball extends Npc {
 
   run = () => {
     this.runBase()
-    this.wallCollision()
-    this.move()
   }
 }

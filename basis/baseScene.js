@@ -13,6 +13,7 @@ class BaseScene {
     this.status = null // over 会导致游戏结束的场景结束 next-下一个场景
     this.keydowns = {}
     this.npcDict = {}
+    this.fraction = 0
   }
 
   get gameContext () {
@@ -32,6 +33,7 @@ class BaseScene {
 
   reset = () => {
     this.status = null
+    this.fraction = 0
     const elementList = Object.values(this.elementDict)
     const npcList = Object.values(this.npcDict)
     for (let item of [...npcList, ...elementList]) {
@@ -86,8 +88,15 @@ class BaseScene {
     }
   }
 
+  drawFraction = () => {
+    if (this.fraction === 0) return
+    const msg = `游戏分数为${this.fraction}`
+    this.gameContext.fillText(msg, 100, 20)
+  }
+
   drawBase = () => {
     this.actionRun()
     this.drawElement()
+    this.drawFraction()
   }
 }

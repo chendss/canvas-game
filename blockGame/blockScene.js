@@ -15,7 +15,9 @@ class BlockScene extends BaseScene {
   blockInit = async () => {
     for (let i = 0; i < this.blocksOfNumber; i++) {
       const key = 'block' + i
-      this.elementDict[key] = await Block.new(...randomCoordinate())
+      const paddle = this.elementDict['paddle']
+      const h = paddle.height + paddle.y - 10
+      this.elementDict[key] = await Block.new(...randomCoordinate(null, h))
       this.elementDict[key].life = this.blockLife
     }
   }
@@ -52,5 +54,6 @@ class BlockScene extends BaseScene {
     if (this.npcDict.ball.status === 'die') {
       this.status = 'over'
     }
+    this.fraction = Object.values(this.elementDict).filter(item => item.status === 'die').length
   }
 }

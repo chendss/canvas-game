@@ -23,6 +23,11 @@ class Npc extends BaseElement {
     }
   }
 
+  /**
+   * 判断碰撞
+   *
+   * @memberof Npc
+   */
   meetObstacles = () => {
     for (let obstacle of this.obstacles) {
       if (collide(this, obstacle) && obstacle.status !== 'die') {
@@ -34,5 +39,7 @@ class Npc extends BaseElement {
 
   runBase = () => {
     this.meetObstacles()
+    this.wallCollision()
+    this.move()
   }
 }

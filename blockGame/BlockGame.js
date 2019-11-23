@@ -49,7 +49,7 @@ class BlockGame extends BaseGame {
     if (['start', 'end'].includes(this.sceneKey)) return
     const gameContext = this.canvas.getContext('2d')
     gameContext.font = '24px serif'
-    const msg = `当前第${this.levelNumber + 1}关`
-    gameContext.fillText(msg, 100, config.height - 10)
+    const msg = `当前第${this.levelNumber + 1}关 按n进入下一关`
+    gameContext.fillText(msg, 150, config.height - 10)
   }
 }

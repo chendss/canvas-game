@@ -47,7 +47,6 @@ class BaseElement {
   }
 
   over = (resolve) => {
-    log('元素加载完成', this)
     this.width = this.img.width
     this.height = this.img.height
     resolve(this)
