@@ -20,8 +20,7 @@ const createScene = function (canvas) {
 
 const gameInit = function () {
   const canvas = document.querySelector('#id-canvas')
-  const scene = createScene(canvas)
-  const game = new BlockGame(canvas, scene)
+  const game = BlockGame.new(canvas)
 }
 
 const __main = function () {

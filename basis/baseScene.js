@@ -10,8 +10,9 @@ class BaseScene {
     this.elementDict = {}
     this.imgDict = {}
     this.actions = {}
-    this.status = null
+    this.status = null // over 会导致游戏结束的场景结束 next-下一个场景
     this.keydowns = {}
+    this.npcDict = {}
   }
 
   get gameContext () {
@@ -29,6 +30,15 @@ class BaseScene {
     this.keydowns[key] = false
   }
 
+  reset = () => {
+    this.status = null
+    const elementList = Object.values(this.elementDict)
+    const npcList = Object.values(this.npcDict)
+    for (let item of [...npcList, ...elementList]) {
+      item.reset()
+    }
+  }
+
 	/**
 	 * 注册场景 控制元素的执行函数
 	 *
@@ -42,23 +52,42 @@ class BaseScene {
 
   loadElement = function () { }
 
+  loadResources = function () { }
+
+  loadNpc = function () { }
+
   init = async () => {
     await this.loadElement()
-    log('场景加载完成', this.elementDict)
+    await this.loadNpc()
+    await this.loadResources()
+    log('场景加载完成', this, this.elementDict)
+  }
+
+  actionRun = () => {
+    const actions = this.actions
+    for (let entries of Object.entries(actions)) {
+      const [key, handle] = entries
+      if (this.keydowns[key] === true && handle instanceof Function) {
+        handle()
+      }
+    }
+  }
+
+  drawElement = () => {
+    const elementList = Object.values(this.elementDict)
+    const npcList = Object.values(this.npcDict)
+    const sprites = [...elementList, ...npcList]
+    for (let sprite of sprites) {
+      const { x, y, img, run, status } = sprite
+      if (status !== 'die') {
+        run && run()
+        this.gameContext.drawImage(img, x, y)
+      }
+    }
   }
 
   drawBase = () => {
-    const elementDict = this.elementDict
-    for (let ele of Object.values(elementDict)) {
-      const { x, y, img } = ele
-      const actions = this.actions
-      for (let entries of Object.entries(actions)) {
-        const [key, handle] = entries
-        if (this.keydowns[key] === true && handle instanceof Function) {
-          handle()
-        }
-      }
-      this.gameContext.drawImage(img, x, y)
-    }
+    this.actionRun()
+    this.drawElement()
   }
 }
