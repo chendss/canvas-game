@@ -10,22 +10,55 @@ const mapping = function () {
   }
 }
 
-const createScene = function (canvas) {
-  const firstResources = {}
-  const result = {
-    first: new FirstBlockScene(canvas, firstResources),
+const createBtn = function () {
+  const games = config.games
+  const btnBox = q('#id-btn-box')
+  const htmlList = []
+  for (let gameId of Object.keys(games)) {
+    htmlList.push(`<button id="${gameId}-btn" class="btn-canvas">${gameId}</button> `)
   }
-  return result
+  btnBox.insertAdjacentHTML('beforeend', htmlList.join(''))
 }
 
-const gameInit = function () {
-  const canvas = document.querySelector('#id-canvas')
-  const game = BlockGame.new(canvas)
+const createCanvas = function () {
+  const games = config.games
+  const canvasBox = q('#id-canvas-box')
+  const htmlList = []
+  for (let gameId of Object.keys(games)) {
+    htmlList.push(`<canvas id="${gameId}" data-width data-height class="none"></canvas> `)
+  }
+  canvasBox.insertAdjacentHTML('beforeend', htmlList.join(''))
+}
+
+const gameInit = function (id, canvas) {
+  if (config.games[id] == null) {
+    if (id === 'block') {
+      config.games[id] = BlockGame.new(canvas)
+    } else if (id === 'air') {
+      config.games[id] = AirGame.new(canvas)
+    }
+  }
+}
+
+const registerGame = function () {
+  const btns = qs('.btn-canvas')
+  for (let btn of btns) {
+    btn.addEventListener('click', () => {
+      const id = btn.innerText
+      const canvasList = qs('canvas')
+      canvasList.forEach(c => c.classList.add('none'))
+      const canvas = q(`#${id}`)
+      canvas.classList.remove('none')
+      gameInit(id, canvas)
+    })
+  }
 }
 
 const __main = function () {
+  createCanvas()
+  createBtn()
   mapping()
-  gameInit()
+  registerGame()
 }
 
 __main()

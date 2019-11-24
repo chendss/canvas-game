@@ -5,18 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <style>
-      #id-canvas {
+      #id-btn-box {
+        position: absolute;
+        left: 50%;
+        top: 10px;
+        transform: translateX(-50%);
+      }
+      #id-canvas-box {
         position: absolute;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
         border: 1px solid black;
       }
+      .none {
+        display: none;
+      }
+      button + button {
+        margin-left: 30px;
+      }
+      button {
+        width: 100px;
+        height: 30px;
+      }
     </style>
     <title>游戏框架-演示</title>
   </head>
   <body>
-    <canvas id="id-canvas" data-width data-height></canvas>
+    <div id="id-btn-box"></div>
+    <div id="id-canvas-box"></div>
   </body>
   <!-- 基础内容 -->
   <script src="./config.js"></script>
@@ -27,13 +44,19 @@
   <script src="./basis/baseScene.js"></script>
   <script src="./basis/gameTitle.js"></script>
   <script src="./basis/baseGame.js"></script>
-  <!-- 游戏本体 -->
+  <!-- 游戏本体 - 挡板-->
   <script src="./blockGame/levels.js"></script>
   <script src="./blockGame/block.js"></script>
   <script src="./blockGame/paddle.js"></script>
   <script src="./blockGame/ball.js"></script>
   <script src="./blockGame/blockScene.js"></script>
   <script src="./blockGame/BlockGame.js"></script>
+  <!-- 游戏本体 - 打飞机 -->
+  <script src="./aircraftWar/airCraft.js"></script>
+  <script src="./aircraftWar/bullet.js"></script>
+  <script src="./aircraftWar/enemy.js"></script>
+  <script src="./aircraftWar/airGame.js"></script>
+  <script src="./aircraftWar/airScene.js"></script>
   <!-- 程序入口 -->
   <script src="./main.js"></script>
 </html>

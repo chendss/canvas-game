@@ -28,18 +28,23 @@ class Npc extends BaseElement {
    *
    * @memberof Npc
    */
-  meetObstacles = () => {
+  meetObstacles = (callback) => {
     for (let obstacle of this.obstacles) {
       if (collide(this, obstacle) && obstacle.status !== 'die') {
         obstacle.meetOfNumber += 1
-        this.gain.y *= -1
+        if (callback) {
+          callback()
+        } else {
+          this.gain.y *= -1
+        }
       }
     }
   }
 
-  runBase = () => {
+  run = () => {
     this.meetObstacles()
     this.wallCollision()
     this.move()
+    this.runExtra && this.runExtra()
   }
 }

@@ -52,7 +52,10 @@ class BaseGame {
 
   changeScene = sceneKey => {
     this.sceneKey = sceneKey
-    this.sceneDict[sceneKey].reset()
+    for (let scene of Object.values(this.sceneDict)) {
+      scene.reset()
+    }
+    this.sceneDict[sceneKey].status = 'ing'
   }
 
   toggleGame = () => {
@@ -83,8 +86,18 @@ class BaseGame {
     this.scene.draw()
   }
 
+  interruptRun = () => {
+    const classList = this.canvas.classList
+    if (this.canvas == null || classList.contains('none')) {
+      return true
+    } else if (this.runStatus === false) {
+      return true
+    }
+    return false
+  }
+
   run = () => {
-    if (this.runStatus === false) return
+    if (this.interruptRun()) return
     this.clearReact()
     this.drawBase()
     this.draw && this.draw()

@@ -3,6 +3,17 @@ class BlockScene extends BaseScene {
     super(canvas)
     this.blocksOfNumber = blocksOfNumber
     this.blockLife = life
+    this.bindEvent()
+  }
+
+  bindEvent = () => {
+    this.canvas.addEventListener('click', async event => {
+      if (this.status === 'ing') {
+        const { offsetX, offsetY } = event
+        const index = randomRange(1, 10 * 10000)
+        this.elementDict[`block${index}`] = await Block.new(offsetX, offsetY)
+      }
+    })
   }
 
   paddleInit = async () => {

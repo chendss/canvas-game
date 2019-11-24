@@ -21,6 +21,17 @@ const bindUp = function (key, callback) {
   })
 }
 
+const vagueObj = function (source, vague) {
+  const result = {}
+  for (let key of Object.keys(source)) {
+    const value = source[key]
+    if (key.includes(vague)) {
+      result[key] = value
+    }
+  }
+  return result
+}
+
 const aInb = (x, x1, x2) => {
   return x >= x1 && x <= x2
 }
@@ -35,8 +46,8 @@ const randomRange = function (min, max) {
 }
 
 const randomCoordinate = function (w, h) {
-  const maxX = w || config.width
-  const maxY = h || config.height
+  const maxX = w || (config.width - 100)
+  const maxY = h || (config.height - 100)
   const result = [randomRange(0, maxX), randomRange(0, maxY)]
   return result
 }

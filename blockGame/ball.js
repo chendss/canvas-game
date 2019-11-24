@@ -3,8 +3,4 @@ class Ball extends Npc {
     super(...args)
     this.imgPath = 'img/ball.png'
   }
-
-  run = () => {
-    this.runBase()
-  }
 }

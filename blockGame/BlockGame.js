@@ -1,8 +1,8 @@
 class BlockGame extends BaseGame {
   constructor(...args) {
     super(...args)
-    this.bindEvent()
     this.levelNumber = 0
+    this.bindEvent()
     this.createScene()
   }
 
