@@ -3,74 +3,84 @@ class AirScene extends BaseScene {
     super(canvas)
     this.bulletOfNumber = 0
     this.enemyOfNumber = config.airGame.enemy.number
-    this.bulletCoolTime = config.airGame.bullet.coolTime
+    const coolTime = config.airGame.enemyBullet.coolTime
+    this.enemyBulletThrottle = throttle(this.enemyBullet, coolTime)
   }
 
-  airCraftInit = async () => {
+  aircraftInit = async () => {
     const x = config.width / 3
     const y = config.height - 50
-    const airCraft = await Aircraft.new(x, y, config.airGame.airCraft)
-    this.elementDict['airCraft'] = airCraft
+    const aircraft = await Aircraft.new(x, y, config.airGame.aircraft)
+    this.elementDict['aircraft'] = aircraft
   }
 
   enemyInit = async () => {
     for (let i = 0; i < this.enemyOfNumber; i++) {
       const key = 'enemy' + i
       const [x, y] = randomCoordinate(null, 50)
-      this.npcDict[key] = await Enemy.new(x, y, config.airGame.enemy)
+      const item = await Enemy.new(x, y, config.airGame.enemy)
+      item.obstacles.push(this.elementDict['aircraft'])
+      this.addNpc(key, item)
     }
   }
 
   backgroudInit = async () => {
-    this.npcDict['cloud'] = await Cloud.new(300, 100, config.airGame.cloud)
-    this.npcDict['cloud2'] = await Cloud.new(100, 150, config.airGame.cloud)
+    const cloudConfig = config.airGame.cloud
+    this.addNpc('cloud', await Cloud.new(300, 100, cloudConfig))
+    this.addNpc('cloud2', await Cloud.new(100, 150, cloudConfig))
+  }
+
+  loadNpc = async () => {
+    await this.backgroudInit()
+    await this.enemyInit()
   }
 
   loadElement = async () => {
-    await this.airCraftInit()
-    await this.enemyInit()
-    await this.backgroudInit()
+    await this.aircraftInit()
     this.elementControl()
   }
 
   createBullet = async () => {
-    const airCraft = this.elementDict['airCraft']
-    const { x, y, width, height } = airCraft
-    const bulletX = x + width / 2
-    const bulletY = y + height / 2 - 20
-    const bullet = await Bullet.new(bulletX, bulletY, config.airGame.bullet)
-    this.npcDict[`bullet${this.bulletOfNumber++}`] = bullet
+    const aircraft = this.elementDict['aircraft']
+    const c = config.airGame.bullet
+    const number = this.bulletOfNumber++
+    const bullet = await this.elementBirth(aircraft, c, Bullet, 'top')
+    this.addNpc(`bulletAir${number}`, bullet)
   }
 
-  setBulletObstacles = () => {
-    const bulletDict = vagueObj(this.npcDict, 'bullet')
+  airBulletObstacles = () => {
+    // 飞机子弹的障碍物
     const enemyDict = vagueObj(this.npcDict, 'enemy')
-    for (let key of Object.keys(bulletDict)) {
-      const bullet = bulletDict[key]
-      bullet.obstacles = Object.values(enemyDict)
-    }
+    const enemyObstacles = Object.values(enemyDict)
+    const enemyBulletDict = vagueObj(this.npcDict, 'bulletEnemy')
+    const obstacles = enemyObstacles.concat(Object.values(enemyBulletDict))
+    this.addObstacles(this.npcDict, 'bulletAir', obstacles)
+  }
+
+  enemyBulletObstacles = () => {
+    // 敌机子弹的障碍物
+    const enemyDict = vagueObj(this.npcDict, 'Air')
+    const aircraft = this.elementDict['aircraft']
+    const obstacles = Object.values(enemyDict).concat(aircraft)
+    this.addObstacles(this.npcDict, 'bulletEnemy', obstacles)
   }
 
   elementControl = () => {
-    this.registerAction('a', () => {
-      const airCraft = this.elementDict['airCraft']
-      airCraft.move('x', 'back')
-    })
-    this.registerAction('d', () => {
-      const airCraft = this.elementDict['airCraft']
-      airCraft.move('x')
-    })
-    this.registerAction('w', () => {
-      const airCraft = this.elementDict['airCraft']
-      airCraft.move('y', 'back')
-    })
-    this.registerAction('s', () => {
-      const airCraft = this.elementDict['airCraft']
-      airCraft.move('y')
-    })
-    this.registerAction('c', () => {
-      this.createBullet()
-    })
+    const dict = {
+      a: ['x', 'back'],
+      d: ['x'],
+      w: ['y', 'back'],
+      s: ['y']
+    }
+    for (let key of Object.keys(dict)) {
+      const param = dict[key]
+      this.registerAction(key, () => {
+        const aircraft = this.elementDict['aircraft']
+        aircraft.move(...param)
+      })
+    }
+    const coolTime = config.airGame.aircraft.coolTime
+    this.registerAction('c', throttle(this.createBullet, coolTime))
   }
 
   clearBullet = () => {
@@ -83,9 +93,29 @@ class AirScene extends BaseScene {
     }
   }
 
+  enemyBullet = async () => {
+    const enemy = vagueObj(this.npcDict, 'enemy')
+    const c = config.airGame.enemyBullet
+    for (let key of Object.keys(enemy)) {
+      const item = this.npcDict[key]
+      const number = this.bulletOfNumber++
+      const bullet = await this.elementBirth(item, c, Bullet)
+      this.addNpc(`bulletEnemy${number}`, bullet)
+    }
+  }
+
+  sceneOver = () => {
+    const aircraft = this.elementDict['aircraft']
+    if (aircraft.status === 'die') {
+      this.status = 'over'
+    }
+  }
+
   draw = () => {
     this.drawBase()
-    this.setBulletObstacles()
+    this.airBulletObstacles()
+    this.enemyBulletObstacles()
+    this.enemyBulletThrottle()
     this.clearBullet()
   }
 }

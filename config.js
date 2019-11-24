@@ -1,6 +1,6 @@
 const config = {
   fps: 60,
-  width: 500,
+  width: 300,
   height: 600,
   debug: true,
   blockGame: {
@@ -13,21 +13,28 @@ const config = {
     }
   },
   airGame: {
-    airCraft: {
+    aircraft: {
       speedX: 5,
       speedY: 5,
-      life: 3
+      life: 15,
+      kill: 100, // 碰撞时给予对方的伤害
+      coolTime: 100
     },
     enemy: {
       speedX: 0,
       speedY: 3,
-      life: 8,
-      number: 15
+      life: 2,
+      number: 5,
+    },
+    enemyBullet: {
+      speedX: 0,
+      speedY: 5,
+      life: 1,
+      coolTime: 1500,
     },
     bullet: {
-      speedY: -5,
+      speedY: -3,
       speedX: 0,
-      coolTime: 50
     },
     cloud: {
       speedX: 0,

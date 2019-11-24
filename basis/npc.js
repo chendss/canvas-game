@@ -32,8 +32,9 @@ class Npc extends BaseElement {
   meetObstacles = () => {
     for (let obstacle of this.obstacles) {
       if (collide(this, obstacle) && obstacle.status !== 'die') {
-        obstacle.meetOfNumber += 1
-        this.meetOfNumber++
+        const obstacleKill = obstacle.eleConfig.kill || 1
+        obstacle.meetOfNumber += this.eleConfig.kill || 1
+        this.meetOfNumber += obstacleKill
         this.gain.y *= -1
       }
     }

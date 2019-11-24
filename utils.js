@@ -45,6 +45,17 @@ const randomRange = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
+function throttle (fn, gapTime) {
+  let _lastTime = null
+  return async function () {
+    let _nowTime = + new Date()
+    if (_nowTime - _lastTime > gapTime || !_lastTime) {
+      await fn()
+      _lastTime = _nowTime
+    }
+  }
+}
+
 const randomCoordinate = function (w, h) {
   const maxX = w || (config.width - 20)
   const maxY = h || (config.height - 20)

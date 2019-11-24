@@ -31,6 +31,18 @@ class BaseScene {
     this.keydowns[key] = false
   }
 
+  elementBirth = async (item, cfg, Item, position = 'bottom') => {
+    const { x, y, width, height } = item
+    let dy = 20
+    if (position === 'top') {
+      dy = -20
+    }
+    const itemX = x + width / 2
+    const itemY = y + height / 2 + dy
+    const result = await Item.new(itemX, itemY, cfg)
+    return result
+  }
+
   reset = () => {
     this.status = null
     this.fraction = 0
@@ -57,6 +69,24 @@ class BaseScene {
   loadResources = function () { }
 
   loadNpc = function () { }
+
+  sceneOver = function () { }
+
+  addObstacles = (source, targetKey, obstacles) => {
+    const target = vagueObj(source, targetKey)
+    for (let key of Object.keys(target)) {
+      const item = target[key]
+      item.obstacles = obstacles
+    }
+  }
+
+  addElement = (key, item) => {
+    this.elementDict[key] = item
+  }
+
+  addNpc = (key, item) => {
+    this.npcDict[key] = item
+  }
 
   init = async () => {
     await this.loadElement()
@@ -98,5 +128,6 @@ class BaseScene {
     this.actionRun()
     this.drawElement()
     this.drawFraction()
+    this.sceneOver()
   }
 }

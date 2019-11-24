@@ -12,8 +12,8 @@ class AirGame extends BaseGame {
   bindEvent = () => {
     bindDown('k', () => {
       if (this.status === 'wait') {
-        log('开始游戏，打飞机')
         this.changeScene('air')
+        q('#air').classList.add('bg')
       }
     })
     bindDown('r', () => {
@@ -22,5 +22,11 @@ class AirGame extends BaseGame {
         this.levelNumber = 0
       }
     })
+  }
+
+  draw = () => {
+    if (this.status === 'over') {
+      q('#air').classList.remove('bg')
+    }
   }
 }

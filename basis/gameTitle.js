@@ -7,7 +7,7 @@ class GameTitle extends BaseScene {
   draw = () => {
     const x = config.width / 2
     const y = config.height / 2
-    this.gameContext.font = '36px serif'
+    this.gameContext.font = '16px serif'
     this.gameContext.textAlign = 'center'
     this.gameContext.fillText(this.title, x, y)
   }
