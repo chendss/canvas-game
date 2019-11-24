@@ -4,6 +4,7 @@ class AirScene extends BaseScene {
     this.bulletOfNumber = 0
     this.enemyOfNumber = config.airGame.enemy.number
     const coolTime = config.airGame.enemyBullet.coolTime
+    this.player = null
     this.enemyBulletThrottle = throttle(this.enemyBullet, coolTime)
   }
 
@@ -11,7 +12,8 @@ class AirScene extends BaseScene {
     const x = config.width / 3
     const y = config.height - 50
     const aircraft = await Aircraft.new(x, y, config.airGame.aircraft)
-    this.elementDict['aircraft'] = aircraft
+    this.player = aircraft
+    this.elementDict['player'] = this.player
   }
 
   enemyInit = async () => {
@@ -19,7 +21,7 @@ class AirScene extends BaseScene {
       const key = 'enemy' + i
       const [x, y] = randomCoordinate(null, 50)
       const item = await Enemy.new(x, y, config.airGame.enemy)
-      item.obstacles.push(this.elementDict['aircraft'])
+      item.obstacles.push(this.player)
       this.addNpc(key, item)
     }
   }
@@ -41,7 +43,7 @@ class AirScene extends BaseScene {
   }
 
   createBullet = async () => {
-    const aircraft = this.elementDict['aircraft']
+    const aircraft = this.player
     const c = config.airGame.bullet
     const number = this.bulletOfNumber++
     const bullet = await this.elementBirth(aircraft, c, Bullet, 'top')
@@ -60,7 +62,7 @@ class AirScene extends BaseScene {
   enemyBulletObstacles = () => {
     // 敌机子弹的障碍物
     const enemyDict = vagueObj(this.npcDict, 'Air')
-    const aircraft = this.elementDict['aircraft']
+    const aircraft = this.player
     const obstacles = Object.values(enemyDict).concat(aircraft)
     this.addObstacles(this.npcDict, 'bulletEnemy', obstacles)
   }
@@ -75,7 +77,7 @@ class AirScene extends BaseScene {
     for (let key of Object.keys(dict)) {
       const param = dict[key]
       this.registerAction(key, () => {
-        const aircraft = this.elementDict['aircraft']
+        const aircraft = this.player
         aircraft.move(...param)
       })
     }
@@ -105,10 +107,16 @@ class AirScene extends BaseScene {
   }
 
   sceneOver = () => {
-    const aircraft = this.elementDict['aircraft']
+    const aircraft = this.player
     if (aircraft.status === 'die') {
       this.status = 'over'
     }
+  }
+
+  countFraction = () => {
+    const target = vagueObj(this.npcDict, 'enemy')
+    const dieOfNumbers = Object.values(target).map(item => item.dieOfNumber)
+    this.fraction = sum(dieOfNumbers)
   }
 
   draw = () => {
@@ -117,5 +125,6 @@ class AirScene extends BaseScene {
     this.enemyBulletObstacles()
     this.enemyBulletThrottle()
     this.clearBullet()
+    this.countFraction()
   }
 }

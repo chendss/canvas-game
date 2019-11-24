@@ -62,3 +62,5 @@ const randomCoordinate = function (w, h) {
   const result = [randomRange(0, maxX), randomRange(0, maxY)]
   return result
 }
+
+const sum = (...arr) => [].concat(...arr).reduce((acc, val) => acc + val, 0)

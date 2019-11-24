@@ -39,6 +39,14 @@ class BaseElement {
     }
   }
 
+  get kill () {
+    const eleConfig = this.eleConfig
+    if (eleConfig && eleConfig.kill) {
+      return eleConfig.kill
+    }
+    return 1
+  }
+
   reset = () => {
     this.x = this.initX
     this.y = this.initY

@@ -14,6 +14,7 @@ class BaseScene {
     this.keydowns = {}
     this.npcDict = {}
     this.fraction = 0
+    this.player = null
   }
 
   get gameContext () {
@@ -124,10 +125,19 @@ class BaseScene {
     this.gameContext.fillText(msg, 100, 20)
   }
 
+  drawLife = () => {
+    if (this.player == null) return
+    const life = this.player.life
+    const meetOfNumber = this.player.meetOfNumber
+    const msg = `生命值${life - meetOfNumber}`
+    this.gameContext.fillText(msg, config.width - 40, config.height - 20)
+  }
+
   drawBase = () => {
     this.actionRun()
     this.drawElement()
     this.drawFraction()
     this.sceneOver()
+    this.drawLife()
   }
 }

@@ -7,6 +7,5 @@ class AirNpc extends Npc {
     this.reset()
     this.y = this.boundary.y.min
     this.x = randomRange(20, this.boundary.x.max - 20)
-    this.dieOfNumber++
   }
 }

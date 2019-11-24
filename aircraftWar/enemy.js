@@ -12,6 +12,7 @@ class Enemy extends AirNpc {
     }
     if (this.life - this.meetOfNumber <= 0) {
       this.init()
+      this.dieOfNumber++
     }
   }
 }
