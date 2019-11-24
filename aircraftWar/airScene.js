@@ -2,7 +2,8 @@ class AirScene extends BaseScene {
   constructor(canvas) {
     super(canvas)
     this.bulletOfNumber = 0
-    this.enemyOfNumber = 10
+    this.enemyOfNumber = config.airGame.enemy.number
+    this.bulletCoolTime = config.airGame.bullet.coolTime
   }
 
   airCraftInit = async () => {
@@ -15,7 +16,7 @@ class AirScene extends BaseScene {
   enemyInit = async () => {
     for (let i = 0; i < this.enemyOfNumber; i++) {
       const key = 'enemy' + i
-      const [x, y] = randomCoordinate(null, 200)
+      const [x, y] = randomCoordinate(null, 50)
       this.npcDict[key] = await Enemy.new(x, y, config.airGame.enemy)
     }
   }

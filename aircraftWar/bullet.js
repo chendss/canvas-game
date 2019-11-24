@@ -4,15 +4,11 @@ class Bullet extends Npc {
     this.imgPath = './img/bullet.png'
   }
 
-  meetObstacles () {
-    super.meetObstacles(() => {
-      log('a')
-      this.status = 'die'
-    })
-  }
-
   runExtra = () => {
     if (this.y <= 0) {
+      this.status = 'die'
+    }
+    if (this.life - this.meetOfNumber <= 0) {
       this.status = 'die'
     }
   }

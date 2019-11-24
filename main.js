@@ -4,7 +4,8 @@ const mapping = function () {
     const data = dom.dataset
     if (data != null) {
       for (let key of Object.keys(data)) {
-        dom.setAttribute(key, config[key])
+        const value = data[key]
+        dom.setAttribute(value || key, config[key])
       }
     }
   }
@@ -54,11 +55,21 @@ const registerGame = function () {
   }
 }
 
+const bindEvent = function () {
+  q('#id-input-fps').addEventListener('input', (event) => {
+    if (config.debug) {
+      const val = event.target.value
+      config.fps = Number(val)
+    }
+  })
+}
+
 const __main = function () {
   createCanvas()
   createBtn()
   mapping()
   registerGame()
+  bindEvent()
 }
 
 __main()

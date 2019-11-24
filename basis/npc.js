@@ -2,6 +2,7 @@ class Npc extends BaseElement {
   // 系统自动控制到元素-会运动
   constructor(...args) {
     super(...args)
+    this.meetOfNumber = 0
     this.obstacles = [] // 障碍物 - 撞到会反弹
   }
 
@@ -28,15 +29,12 @@ class Npc extends BaseElement {
    *
    * @memberof Npc
    */
-  meetObstacles = (callback) => {
+  meetObstacles = () => {
     for (let obstacle of this.obstacles) {
       if (collide(this, obstacle) && obstacle.status !== 'die') {
         obstacle.meetOfNumber += 1
-        if (callback) {
-          callback()
-        } else {
-          this.gain.y *= -1
-        }
+        this.meetOfNumber++
+        this.gain.y *= -1
       }
     }
   }

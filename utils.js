@@ -46,8 +46,8 @@ const randomRange = function (min, max) {
 }
 
 const randomCoordinate = function (w, h) {
-  const maxX = w || (config.width - 100)
-  const maxY = h || (config.height - 100)
+  const maxX = w || (config.width - 20)
+  const maxY = h || (config.height - 20)
   const result = [randomRange(0, maxX), randomRange(0, maxY)]
   return result
 }

@@ -12,6 +12,7 @@ class AirGame extends BaseGame {
   bindEvent = () => {
     bindDown('k', () => {
       if (this.status === 'wait') {
+        log('开始游戏，打飞机')
         this.changeScene('air')
       }
     })

@@ -101,10 +101,11 @@ class BaseGame {
     this.clearReact()
     this.drawBase()
     this.draw && this.draw()
+    this.__start()
   }
 
   __start = () => {
-    this.runPointer = setInterval(this.run, this.gameSpeed)
+    this.runPointer = setTimeout(this.run, this.gameSpeed)
   }
 
   loadScene = async () => {

@@ -6,12 +6,17 @@ class BlockScene extends BaseScene {
     this.bindEvent()
   }
 
+  addBlock = async (id, point) => {
+    this.elementDict[`block${id}`] = await Block.new(...point)
+    this.elementDict[`block${id}`].life = this.blockLife
+  }
+
   bindEvent = () => {
     this.canvas.addEventListener('click', async event => {
       if (this.status === 'ing') {
         const { offsetX, offsetY } = event
         const index = randomRange(1, 10 * 10000)
-        this.elementDict[`block${index}`] = await Block.new(offsetX, offsetY)
+        await this.addBlock(index, [offsetX, offsetY])
       }
     })
   }
@@ -28,8 +33,7 @@ class BlockScene extends BaseScene {
       const key = 'block' + i
       const paddle = this.elementDict['paddle']
       const h = paddle.height + paddle.y - 10
-      this.elementDict[key] = await Block.new(...randomCoordinate(null, h))
-      this.elementDict[key].life = this.blockLife
+      await this.addBlock(key, randomCoordinate(null, h))
     }
   }
 
