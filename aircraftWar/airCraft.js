@@ -1,6 +1,6 @@
-class AirCraft extends BaseElement {
+class Aircraft extends BaseElement {
   constructor(...args) {
     super(...args)
-    this.imgPath = './img/airCraft.png'
+    this.imgPath = './img/aircraft.png'
   }
 }

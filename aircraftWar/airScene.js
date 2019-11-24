@@ -8,7 +8,7 @@ class AirScene extends BaseScene {
   airCraftInit = async () => {
     const x = config.width / 3
     const y = config.height - 50
-    const airCraft = await AirCraft.new(x, y, config.airGame.airCraft)
+    const airCraft = await Aircraft.new(x, y, config.airGame.airCraft)
     this.elementDict['airCraft'] = airCraft
   }
 
