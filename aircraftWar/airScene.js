@@ -22,7 +22,8 @@ class AirScene extends BaseScene {
   }
 
   backgroudInit = async () => {
-    this.npcDict['cloud'] = await Cloud.new(100, 100, config.airGame.cloud)
+    this.npcDict['cloud'] = await Cloud.new(300, 100, config.airGame.cloud)
+    this.npcDict['cloud2'] = await Cloud.new(100, 150, config.airGame.cloud)
   }
 
   loadElement = async () => {
@@ -72,9 +73,19 @@ class AirScene extends BaseScene {
     })
   }
 
+  clearBullet = () => {
+    const bullet = vagueObj(this.npcDict, 'bullet')
+    for (let key of Object.keys(bullet)) {
+      const value = this.npcDict[key]
+      if (value.status === 'die') {
+        delete this.npcDict[key]
+      }
+    }
+  }
 
   draw = () => {
     this.drawBase()
     this.setBulletObstacles()
+    this.clearBullet()
   }
 }

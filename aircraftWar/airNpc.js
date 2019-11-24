@@ -1,8 +1,6 @@
 class AirNpc extends Npc {
   constructor(...args) {
     super(...args)
-    this.life = this.eleConfig.life
-    this.dieOfNumber = 0
   }
 
   init = () => {

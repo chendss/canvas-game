@@ -21,8 +21,8 @@ const config = {
     enemy: {
       speedX: 0,
       speedY: 3,
-      life: 5,
-      number: 10
+      life: 8,
+      number: 15
     },
     bullet: {
       speedY: -5,
