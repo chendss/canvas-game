@@ -1,7 +1,7 @@
 class Enemy extends Npc {
   constructor(...args) {
     super(...args)
-    this.imgPath = 'img/enemy.png'
+    this.imgPath = './img/enemy.png'
   }
 
   runExtra = () => {

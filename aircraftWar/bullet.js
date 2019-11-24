@@ -1,7 +1,7 @@
 class Bullet extends Npc {
   constructor(...args) {
     super(...args)
-    this.imgPath = 'img/bullet.png'
+    this.imgPath = './img/bullet.png'
   }
 
   meetObstacles () {

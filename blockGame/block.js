@@ -1,7 +1,7 @@
 class Block extends BaseElement {
   constructor(...args) {
     super(...args)
-    this.imgPath = 'img/block.png'
+    this.imgPath = './img/block.png'
   }
 
   run = () => {

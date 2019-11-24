@@ -29,6 +29,7 @@ class BlockGame extends BaseGame {
   bindEvent = () => {
     bindDown('k', () => {
       if (this.status === 'wait') {
+        log('开始游戏了', this.sceneDict)
         this.changeScene('scene0')
       }
     })
