@@ -29,6 +29,10 @@ const config = {
       speedX: 0,
       coolTime: 50
     },
+    cloud: {
+      speedX: 0,
+      speedY: 2,
+    }
   },
   games: {
     block: null,

@@ -1,7 +1,7 @@
-class Enemy extends AirNpc {
+class Cloud extends AirNpc {
   constructor(...args) {
     super(...args)
-    this.imgPath = './img/enemy.png'
+    this.imgPath = './img/cloud.png'
   }
 
   runExtra = () => {

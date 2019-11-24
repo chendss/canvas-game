@@ -1,4 +1,4 @@
-class Bullet extends Npc {
+class Bullet extends AirNpc {
   constructor(...args) {
     super(...args)
     this.imgPath = './img/bullet.png'

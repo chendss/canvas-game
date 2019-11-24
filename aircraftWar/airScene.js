@@ -21,9 +21,14 @@ class AirScene extends BaseScene {
     }
   }
 
+  backgroudInit = async () => {
+    this.npcDict['cloud'] = await Cloud.new(100, 100, config.airGame.cloud)
+  }
+
   loadElement = async () => {
     await this.airCraftInit()
     await this.enemyInit()
+    await this.backgroudInit()
     this.elementControl()
   }
 
