@@ -115,10 +115,10 @@ class BaseScene {
 		const npcList = Object.values(this.npcDict)
 		const sprites = [...elementList, ...npcList]
 		for (let sprite of sprites) {
-			const { x, y, img, run, status } = sprite
+			const { run, status } = sprite
 			if (status !== 'die') {
 				run && run()
-				this.gameContext.drawImage(img, x, y)
+				sprite.draw && sprite.draw(this.gameContext)
 			}
 		}
 	}

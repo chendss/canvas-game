@@ -38,6 +38,9 @@ class AirScene extends BaseScene {
 	}
 
 	loadElement = async () => {
+		const spark = await Spark.new(100, 100)
+		log('524564', spark)
+		this.addElement('tewt', spark)
 		await this.aircraftInit()
 		this.elementControl()
 	}
