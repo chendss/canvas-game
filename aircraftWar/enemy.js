@@ -7,6 +7,7 @@ class Enemy extends AirNpc {
   }
 
   runExtra = () => {
+    window.die = false
     if (this.y >= this.boundary.y.max) {
       this.init()
     }

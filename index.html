@@ -1,72 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<style>
-			#id-btn-box {
-				position: absolute;
-				left: 50%;
-				top: 10px;
-				transform: translateX(-50%);
-			}
-			#id-canvas-box {
-				display: flex;
-				position: absolute;
-				left: 50%;
-				top: 50%;
-				transform: translate(-50%, -50%);
-				border: 1px solid black;
-			}
-			#air.bg {
-				background: url('./img/sky.jpg');
-			}
-			.none {
-				display: none;
-			}
-			button + button {
-				margin-left: 30px;
-			}
-			button {
-				width: 100px;
-				height: 30px;
-			}
-		</style>
-		<title>游戏框架-演示</title>
-	</head>
-	<body>
-		<div id="id-btn-box"></div>
-		<div id="id-canvas-box"></div>
-		<div class="control-box">
-			<input id="id-input-fps" type="range" min="10" max="144" data-value="fps" />
-		</div>
-	</body>
-	<!-- 基础内容 -->
-	<script src="./config.js"></script>
-	<script src="./utils.js"></script>
-	<!-- 基础元素 -->
-	<script src="./basis/baseElement.js"></script>
-	<script src="./basis/npc.js"></script>
-	<script src="./basis/baseScene.js"></script>
-	<script src="./basis/gameTitle.js"></script>
-	<script src="./basis/baseGame.js"></script>
-	<!-- 游戏本体 - 挡板-->
-	<script src="./blockGame/levels.js"></script>
-	<script src="./blockGame/block.js"></script>
-	<script src="./blockGame/paddle.js"></script>
-	<script src="./blockGame/ball.js"></script>
-	<script src="./blockGame/blockScene.js"></script>
-	<script src="./blockGame/blockGame.js"></script>
-	<!-- 游戏本体 - 打飞机 -->
-	<script src="./aircraftWar/spark.js"></script>
-	<script src="./aircraftWar/airNpc.js"></script>
-	<script src="./aircraftWar/cloud.js"></script>
-	<script src="./aircraftWar/aircraft.js"></script>
-	<script src="./aircraftWar/bullet.js"></script>
-	<script src="./aircraftWar/enemy.js"></script>
-	<script src="./aircraftWar/airGame.js"></script>
-	<script src="./aircraftWar/airScene.js"></script>
-	<!-- 程序入口 -->
-	<script src="./main.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <style>
+      #id-btn-box {
+        position: absolute;
+        left: 50%;
+        top: 10px;
+        transform: translateX(-50%);
+      }
+      #id-canvas-box {
+        display: flex;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border: 1px solid black;
+      }
+      #air.bg {
+        background: url('./img/sky.jpg');
+      }
+      .none {
+        display: none;
+      }
+      button + button {
+        margin-left: 30px;
+      }
+      button {
+        width: 100px;
+        height: 30px;
+      }
+    </style>
+    <title>游戏框架-演示</title>
+  </head>
+  <body>
+    <div id="id-btn-box"></div>
+    <div id="id-canvas-box"></div>
+    <div class="control-box">
+      <input
+        id="id-input-fps"
+        type="range"
+        min="10"
+        max="288"
+        data-value="fps"
+      />
+    </div>
+  </body>
+  <!-- 基础内容 -->
+  <script src="./config.js"></script>
+  <script src="./utils.js"></script>
+  <!-- 基础元素 -->
+  <script src="./basis/baseElement.js"></script>
+  <script src="./basis/npc.js"></script>
+  <script src="./basis/baseScene.js"></script>
+  <script src="./basis/gameTitle.js"></script>
+  <script src="./basis/baseGame.js"></script>
+  <!-- 游戏本体 - 挡板-->
+  <script src="./blockGame/levels.js"></script>
+  <script src="./blockGame/block.js"></script>
+  <script src="./blockGame/paddle.js"></script>
+  <script src="./blockGame/ball.js"></script>
+  <script src="./blockGame/blockScene.js"></script>
+  <script src="./blockGame/blockGame.js"></script>
+  <!-- 游戏本体 - 打飞机 -->
+  <script src="./aircraftWar/spark.js"></script>
+  <script src="./aircraftWar/airNpc.js"></script>
+  <script src="./aircraftWar/cloud.js"></script>
+  <script src="./aircraftWar/aircraft.js"></script>
+  <script src="./aircraftWar/bullet.js"></script>
+  <script src="./aircraftWar/enemy.js"></script>
+  <script src="./aircraftWar/airGame.js"></script>
+  <script src="./aircraftWar/airScene.js"></script>
+  <!-- 程序入口 -->
+  <script src="./main.js"></script>
 </html>

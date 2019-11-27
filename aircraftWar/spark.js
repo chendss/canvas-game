@@ -7,11 +7,6 @@ class Spark extends Npc {
     this.g = 10
   }
 
-  setVxVy = (speedX, speedY) => {
-    this.speedX = speedX || this.speedX
-    this.speedY = speedY || this.speedY
-  }
-
   move () {
     this.x += this.speedX
     this.y += this.speedY

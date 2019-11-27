@@ -3,9 +3,9 @@ class AirScene extends BaseScene {
     super(canvas)
     this.bulletOfNumber = 0
     this.enemyOfNumber = config.airGame.enemy.number
-    const coolTime = config.airGame.enemyBullet.coolTime
     this.player = null
-    this.enemyBulletThrottle = throttle(this.enemyBullet, coolTime)
+    this.enemyBulletCoolOfNumber = 0
+    this.airBulletCoolOfNumber = 0
   }
 
   aircraftInit = async () => {
@@ -43,6 +43,12 @@ class AirScene extends BaseScene {
   }
 
   createBullet = async () => {
+    const coolTime = config.airGame.aircraft.coolTime
+    if (this.airBulletCoolOfNumber <= coolTime) {
+      this.airBulletCoolOfNumber++
+      return
+    }
+    this.airBulletCoolOfNumber = 0
     const aircraft = this.player
     const c = config.airGame.bullet
     const number = this.bulletOfNumber++
@@ -81,8 +87,7 @@ class AirScene extends BaseScene {
         aircraft.move(...param)
       })
     }
-    const coolTime = config.airGame.aircraft.coolTime
-    this.registerAction('c', throttle(this.createBullet, coolTime))
+    this.registerAction('c', this.createBullet)
   }
 
   clearRubbish = () => {
@@ -96,6 +101,12 @@ class AirScene extends BaseScene {
   }
 
   enemyBullet = async () => {
+    const coolTime = config.airGame.enemyBullet.coolTime
+    if (this.enemyBulletCoolOfNumber <= coolTime) {
+      this.enemyBulletCoolOfNumber++
+      return
+    }
+    this.enemyBulletCoolOfNumber = 0
     const enemy = vagueObj(this.npcDict, 'enemy')
     const c = config.airGame.enemyBullet
     for (let key of Object.keys(enemy)) {
@@ -112,28 +123,12 @@ class AirScene extends BaseScene {
     this.fraction = sumBy(items, 'dieOfNumber')
   }
 
-  boom = () => {
-    const enemy = vagueObj(this.npcDict, 'enemy')
-    for (let key of Object.keys(enemy)) {
-      const item = this.npcDict[key]
-      const { life, meetOfNumber } = item
-      if (life - meetOfNumber <= 0) {
-        for (let i = 0; i < 50; i++) {
-          const number = this.bulletOfNumber++
-          this.elementBirth(item, null, Spark).then((spark) => {
-            this.addNpc(`sparkRubbish${number}`, spark)
-          })
-        }
-      }
-    }
-  }
-
   draw = () => {
-    this.boom()
+    this.boom('enemy')
     this.drawBase()
     this.airBulletObstacles()
     this.enemyBulletObstacles()
-    this.enemyBulletThrottle()
+    this.enemyBullet()
     this.clearRubbish()
     this.countFraction()
   }

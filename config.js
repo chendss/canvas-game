@@ -18,19 +18,19 @@ const config = {
       speedY: 5,
       life: 15000,
       kill: 100, // 碰撞时给予对方的伤害
-      coolTime: 100,
+      coolTime: 3,
     },
     enemy: {
       speedX: 0,
       speedY: 3,
       life: 2,
-      number: 5,
+      number: 1,
     },
     enemyBullet: {
       speedX: 0,
       speedY: 5,
       life: 1,
-      coolTime: 1500,
+      coolTime: 60,
     },
     bullet: {
       speedY: -3,

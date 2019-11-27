@@ -137,6 +137,22 @@ class BaseScene {
     this.gameContext.fillText(msg, config.width - 40, config.height - 20)
   }
 
+  boom = (itemKey) => {
+    const itemDict = vagueObj(this.npcDict, itemKey)
+    for (let key of Object.keys(itemDict)) {
+      const item = this.npcDict[key]
+      const { life, meetOfNumber } = item
+      if (life - meetOfNumber <= 0) {
+        for (let i = 0; i < 30; i++) {
+          const number = this.bulletOfNumber++
+          this.elementBirth(item, null, Spark).then((spark) => {
+            this.addNpc(`sparkRubbish${number}`, spark)
+          })
+        }
+      }
+    }
+  }
+
   drawBase = () => {
     this.actionRun()
     this.drawElement()
