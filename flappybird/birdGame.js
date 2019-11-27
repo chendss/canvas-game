@@ -1,18 +1,20 @@
-class AirGame extends BaseGame {
+class BirdGame extends BaseGame {
   constructor(...args) {
     super(...args)
+    this.levelNumber = 0
     this.bindEvent()
+    this.createScene()
   }
 
   createScene () {
-    this.sceneDict['air'] = new AirScene(this.canvas)
+    this.sceneDict['bird'] = new BirdScene(this.canvas)
   }
 
   bindEvent = () => {
     bindDown('k', () => {
       if (this.status === 'wait') {
-        this.changeScene('air')
-        q('#air').classList.add('bg')
+        this.changeScene('bird')
+        q('#flappybird').classList.add('bg')
       }
     })
     bindDown('r', () => {
@@ -25,7 +27,7 @@ class AirGame extends BaseGame {
 
   draw = () => {
     if (this.status === 'over') {
-      q('#air').classList.remove('bg')
+      q('#flappybird').classList.remove('bg')
     }
   }
 }

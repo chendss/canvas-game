@@ -42,7 +42,7 @@ class AirScene extends BaseScene {
     this.elementControl()
   }
 
-  createBullet = async () => {
+  launchBullet = async () => {
     const coolTime = config.airGame.aircraft.coolTime
     if (this.airBulletCoolOfNumber <= coolTime) {
       this.airBulletCoolOfNumber++
@@ -87,7 +87,7 @@ class AirScene extends BaseScene {
         aircraft.move(...param)
       })
     }
-    this.registerAction('c', this.createBullet)
+    this.registerAction('c', this.launchBullet)
   }
 
   clearRubbish = () => {

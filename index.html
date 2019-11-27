@@ -21,6 +21,11 @@
       }
       #air.bg {
         background: url('./img/sky.jpg');
+        background-size: contain;
+      }
+      #flappybird.bg {
+        background: url('./img/bg.png');
+        background-size: contain;
       }
       .none {
         display: none;
@@ -73,6 +78,12 @@
   <script src="./aircraftWar/enemy.js"></script>
   <script src="./aircraftWar/airGame.js"></script>
   <script src="./aircraftWar/airScene.js"></script>
+  <!-- 游戏本体 - 小鸟 -->
+  <script src="./flappybird/bird.js"></script>
+  <script src="./flappybird/land.js"></script>
+  <script src="./flappybird/pipe.js"></script>
+  <script src="./flappybird/birdScene.js"></script>
+  <script src="./flappybird/birdGame.js"></script>
   <!-- 程序入口 -->
   <script src="./main.js"></script>
 </html>

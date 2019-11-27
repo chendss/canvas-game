@@ -24,7 +24,7 @@ const config = {
       speedX: 0,
       speedY: 3,
       life: 2,
-      number: 1,
+      number: 8,
     },
     enemyBullet: {
       speedX: 0,
@@ -40,6 +40,15 @@ const config = {
       speedX: 0,
       speedY: 2,
     },
+  },
+  flappybird: {
+    land: {
+      speedX: -5,
+    },
+    bird: {
+      speedY: 10,
+      g: 2,
+    }
   },
   games: {
     block: null,

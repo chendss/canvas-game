@@ -37,6 +37,8 @@ const gameInit = function (id, canvas) {
       config.games[id] = BlockGame.new(canvas)
     } else if (id === 'air') {
       config.games[id] = AirGame.new(canvas)
+    } else if (id === 'flappybird') {
+      config.games[id] = BirdGame.new(canvas)
     }
   }
 }

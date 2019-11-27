@@ -3,10 +3,9 @@ class BlockGame extends BaseGame {
     super(...args)
     this.levelNumber = 0
     this.bindEvent()
-    this.createScene()
   }
 
-  createScene = () => {
+  createScene () {
     for (let i = 0; i < levels.length; i++) {
       const level = levels[i]
       const number = level[0]

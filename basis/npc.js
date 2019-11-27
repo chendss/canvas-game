@@ -11,7 +11,7 @@ class Npc extends BaseElement {
 	 *
 	 * @memberof BaseElement
 	 */
-  wallCollision = () => {
+  wallCollision () {
     const boundary = this.boundary
     if (this.y >= this.boundary.y.max) {
       this.lifeControl(this.life - 1)

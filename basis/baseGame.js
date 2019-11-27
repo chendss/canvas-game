@@ -15,6 +15,7 @@ class BaseGame {
     this.runStatus = true
     this.bindGameControl()
     this.context.fillStyle = 'red'
+    this.createScene()
   }
 
   static new (canvas) {
