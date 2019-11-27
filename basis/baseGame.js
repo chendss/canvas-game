@@ -98,10 +98,11 @@ class BaseGame {
   }
 
   run = () => {
-    if (this.interruptRun()) return
-    this.clearReact()
-    this.drawBase()
-    this.draw && this.draw()
+    if (!this.interruptRun()) {
+      this.clearReact()
+      this.drawBase()
+      this.draw && this.draw()
+    }
     this.__start()
   }
 
