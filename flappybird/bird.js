@@ -7,7 +7,7 @@ class Bird extends BaseElement {
   run = () => {
     this.y += config.flappybird.bird.g
     if (this.y >= this.boundary.y.max) {
-      this.status = 'die'
+      // this.status = 'die'
     }
   }
 }

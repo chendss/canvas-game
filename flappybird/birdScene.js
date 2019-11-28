@@ -3,7 +3,7 @@ class BirdScene extends BaseScene {
     super(canvas)
   }
 
-  elementControl () {
+  elementControl() {
     this.registerAction('w', () => {
       this.player.move('y', 'back')
     })
@@ -21,8 +21,8 @@ class BirdScene extends BaseScene {
   landInit = async () => {
     const len = Math.ceil(config.width / 137)
     const h = config.height - 80
-    for (let i = 0; i < len; i++) {
-      const land = await Land.new(i * 136, h, config.flappybird.land)
+    for (let i = 0; i < len + 1; i++) {
+      const land = await Land.new(i * 137, h, config.flappybird.land)
       this.addNpc('land' + i, land)
     }
   }
@@ -33,7 +33,7 @@ class BirdScene extends BaseScene {
     this.elementControl()
   }
 
-  drawLife () { }
+  drawLife() { }
 
   draw = () => {
     this.drawBase()
