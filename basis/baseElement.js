@@ -20,7 +20,7 @@ class BaseElement {
     this.meetOfNumber = 0
   }
 
-  static async new(x, y, eleConfig) {
+  static async new (x, y, eleConfig) {
     return new Promise(resolve => {
       const ele = new this(x, y, eleConfig)
       ele.img.src = ele.imgPath
@@ -28,7 +28,7 @@ class BaseElement {
     })
   }
 
-  get boundary() {
+  get boundary () {
     return {
       x: {
         min: 0,
@@ -41,7 +41,7 @@ class BaseElement {
     }
   }
 
-  get kill() {
+  get kill () {
     const eleConfig = this.eleConfig
     if (eleConfig && eleConfig.kill) {
       return eleConfig.kill
@@ -69,7 +69,7 @@ class BaseElement {
     }
   }
 
-  scope(value, { min, max }) {
+  scope (value, { min, max }) {
     let result = value
     if (value >= max) {
       result = max
@@ -79,7 +79,7 @@ class BaseElement {
     return result
   }
 
-  get speed() {
+  get speed () {
     let speedX = this.speedX
     let speedY = this.speedY
     if (this.eleConfig) {
@@ -101,13 +101,13 @@ class BaseElement {
     }
   }
 
-  draw(gameContext) {
+  draw (gameContext) {
     // 只传入画板
     const { x, y, img } = this
     gameContext.drawImage(img, x, y)
   }
 
-  move(axis, direction = 'forward') {
+  move (axis, direction = 'forward') {
     // 往右与往上代表前进,对于混乱元素不起效
     const directionDict = {
       forward: 1,

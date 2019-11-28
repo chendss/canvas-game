@@ -4,15 +4,15 @@ class Land extends Npc {
     this.imgPath = './img/land.png'
   }
 
-  scope(value) { return value }
+  scope (value) { return value }
 
-  wallCollision() { }
+  wallCollision () { }
 
   runExtra = () => {
-    const len = Math.ceil(config.width / 137) - 1
-    const dx = config.width % this.width
+    const w = 137
+    const len = Math.ceil(config.width / w)
     if (this.x <= -this.width) {
-      this.x = 544 - dx
+      this.x = (len + 1) * w + this.x
     }
   }
 }

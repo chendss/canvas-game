@@ -1,6 +1,6 @@
 const config = {
   fps: 60,
-  width: 500,
+  width: 600,
   height: 600,
   debug: true,
   blockGame: {
@@ -44,11 +44,22 @@ const config = {
   flappybird: {
     land: {
       speedX: -5,
+      kill: 1
     },
     bird: {
       speedY: 10,
-      g: 2,
-    }
+      speedX: -2,
+      gy: 2,
+      gx: -2,
+      coolTime: 2
+    },
+    pipe: {
+      speedX: -5,
+      kill: 1,
+      number: 5,
+      intervalX: 120,
+      intervalY: 200,
+    },
   },
   games: {
     block: null,
