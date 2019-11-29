@@ -78,3 +78,19 @@ const loadImg = function (src) {
     img.onload = () => resolve(img)
   })
 }
+
+const toArray = function (source) {
+  if (source instanceof Array) {
+    return source
+  }
+  return [source]
+}
+
+const range = function (min, max, val) {
+  if (val >= max) {
+    return max
+  } else if (val <= min) {
+    return min
+  }
+  return val
+}

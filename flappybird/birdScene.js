@@ -4,7 +4,16 @@ class BirdScene extends BaseScene {
     this.n = 0
   }
 
-  elementControl () {
+  reset() {
+    super.reset()
+    const npc = vagueObj(this.npcDict, 'pipe')
+    for (let key of Object.keys(npc)) {
+      delete this.npcDict[key]
+    }
+    this.pipeInit()
+  }
+
+  elementControl() {
     this.registerAction('w', () => {
       this.player.jump()
     })
@@ -26,7 +35,8 @@ class BirdScene extends BaseScene {
   }
 
   birdObstacles = () => {
-    // this.addObstacles(this.npcDict, 'land', [this.player])
+    this.addObstacles(this.npcDict, 'land', [this.player])
+    this.addObstacles(this.npcDict, 'pipe', [this.player])
   }
 
   landInit = async () => {
@@ -50,37 +60,55 @@ class BirdScene extends BaseScene {
       const bottomY = 320 + topY + intervalY
       let pipeBottom = await Pipe.new(pipX, bottomY, cfg)
       let pipeTop = await Pipe.new(pipX, topY, cfg)
-      this.addNpc(`pipeTop${i}`, pipeTop)
-      this.addNpc(`pipeBottom${i}`, pipeBottom)
+      this.addNpc(`pipeTop${this.n++}`, pipeTop)
+      this.addNpc(`pipeBottom${this.n++}`, pipeBottom)
     }
   }
 
   loadElement = async () => {
     await this.birdInit()
-    // await this.landInit()
-    // await this.pipeInit()
+    await this.landInit()
     this.elementControl()
+  }
+
+  addPipe = async () => {
+    const pipeDict = vagueObj(this.npcDict, 'pipeTop')
+    const pipes = Object.values(pipeDict)
+    const cfg = config.flappybird.pipe
+    const intervalX = randomRange(100, 150)
+    const len = pipes.length
+    const lastPipe = pipes[len - 1]
+    const intervalY = randomRange(100, 200)
+    const pipX = lastPipe.x + intervalX + 50
+    const topY = randomRange(-(320 * 2 - config.height + 100), 0)
+    const bottomY = 320 + topY + intervalY
+    let pipeBottom = await Pipe.new(pipX, bottomY, cfg)
+    let pipeTop = await Pipe.new(pipX, topY, cfg)
+    this.addNpc(`pipeTop${this.n++}`, pipeTop)
+    this.addNpc(`pipeBottom${this.n++}`, pipeBottom)
   }
 
   drawPipe = async () => {
     const birdX = this.player.x
-    const pipeDict = vagueObj(this.npcDict, 'pipeTop')
+    const pipeDict = vagueObj(this.npcDict, 'pipe')
     for (let key of Object.keys(pipeDict)) {
       const pipe = pipeDict[key]
       if (pipe.x >= birdX) {
         return
       } else if (pipe.x <= -pipe.width) {
+        if (key.includes('top')) {
+          await this.addPipe()
+        }
         delete this.npcDict[key]
       }
     }
-    await this.pipeInit()
   }
 
-  drawLife () { }
+  drawLife() { }
 
   draw = () => {
     this.drawBase()
     this.birdObstacles()
-    // this.drawPipe()
+    this.drawPipe()
   }
 }

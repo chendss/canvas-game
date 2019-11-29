@@ -17,7 +17,7 @@ class BaseScene {
     this.player = null
   }
 
-  get gameContext () {
+  get gameContext() {
     if (this.canvas == null) {
       return null
     }
@@ -44,7 +44,7 @@ class BaseScene {
     return result
   }
 
-  reset = () => {
+  reset() {
     this.status = null
     this.fraction = 0
     const elementList = Object.values(this.elementDict)
@@ -129,7 +129,7 @@ class BaseScene {
     this.gameContext.fillText(msg, 100, 20)
   }
 
-  drawLife () {
+  drawLife() {
     if (this.player == null) return
     const life = this.player.life
     const meetOfNumber = this.player.meetOfNumber

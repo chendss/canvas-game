@@ -33,7 +33,7 @@ class BlockScene extends BaseScene {
     for (let i = 0; i < this.blocksOfNumber; i++) {
       const key = 'block' + i
       const paddle = this.elementDict['paddle']
-      const h = paddle.height + paddle.y - 10
+      const h = paddle.y - 40
       await this.addBlock(key, randomCoordinate(null, h))
     }
   }
@@ -66,7 +66,7 @@ class BlockScene extends BaseScene {
     }
   }
 
-  drawLife () { }
+  drawLife() { }
 
   draw = () => {
     this.drawBase()

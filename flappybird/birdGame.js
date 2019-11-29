@@ -4,9 +4,11 @@ class BirdGame extends BaseGame {
     this.levelNumber = 0
     this.bindEvent()
     this.createScene()
+    log('popo',this.extraTitle)
+    this.extraTitle.start = 'w跳，ad转向'
   }
 
-  createScene () {
+  createScene() {
     this.sceneDict['bird'] = new BirdScene(this.canvas)
   }
 
