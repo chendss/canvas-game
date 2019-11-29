@@ -12,6 +12,7 @@ class Land extends Npc {
     const w = 137
     const len = Math.ceil(config.width / w)
     if (this.x <= -this.width) {
+      // 当路移动到外部时，塞到队伍末尾
       this.x = (len + 1) * w + this.x
     }
   }

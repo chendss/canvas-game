@@ -11,6 +11,12 @@ const mapping = function () {
   }
 }
 
+const createConfigHtml = function () {
+  for (let key of Object.keys(config)) {
+    
+  }
+}
+
 const createBtn = function () {
   const games = config.games
   const btnBox = q('#id-btn-box')
@@ -69,6 +75,7 @@ const bindEvent = function () {
 const __main = function () {
   createCanvas()
   createBtn()
+  createConfigHtml()
   mapping()
   registerGame()
   bindEvent()

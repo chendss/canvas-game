@@ -57,8 +57,14 @@ const config = {
       speedX: -3,
       kill: 1,
       number: 3,
-      intervalX: 120,
-      intervalY: 200,
+      intervalX: {
+        min: 100,
+        max: 150
+      },
+      intervalY: {
+        max: 250,
+        min: 150
+      },
     },
   },
   games: {

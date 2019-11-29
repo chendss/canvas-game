@@ -60,13 +60,14 @@ class BlockScene extends BaseScene {
   }
 
   setBallObstacles = () => {
+    // 设置球的障碍物
     if (this.npcDict.ball) {
       const obstacles = Object.values(this.elementDict)
       this.addObstacles(this.npcDict, 'ball', obstacles)
     }
   }
 
-  drawLife() { }
+  drawLife () { }
 
   draw = () => {
     this.drawBase()
@@ -74,6 +75,7 @@ class BlockScene extends BaseScene {
     if (this.npcDict.ball.status === 'die') {
       this.status = 'over'
     }
-    this.fraction = Object.values(this.elementDict).filter(item => item.status === 'die').length
+    const elements = Object.values(this.elementDict)
+    this.fraction = elements.filter(e => e.status === 'die').length // 计算分数
   }
 }

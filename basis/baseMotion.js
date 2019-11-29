@@ -6,19 +6,18 @@ class BaseMotion extends BaseElement {
     this.imgPaths = []
     this.coolTimeOfNumber = 0
     this.flipx = false
-    this.rotation = 0
+    this.rotation = 0 // 旋转角度
   }
 
-  get cool() {
+  get cool () {
     const ele = this.eleConfig
     const vals = [this.coolTime, ele.coolTime, 0]
     return vals.find(v => v != null)
   }
 
-  static async new(x, y, eleConfig) {
+  static async new (x, y, eleConfig) {
     const ele = await new this(x, y, eleConfig)
     const imgPaths = toArray(ele.imgPath)
-    log('会动的元素准备加载', imgPaths)
     for (let imgPath of imgPaths) {
       const img = await loadImg(imgPath)
       ele.imgs.push(img)
@@ -27,7 +26,7 @@ class BaseMotion extends BaseElement {
     return ele
   }
 
-  drawElement(gameContext, img) {
+  drawElement (gameContext, img) {
     const w2 = this.width / 2
     const h2 = this.height / 2
     gameContext.save()
@@ -41,8 +40,7 @@ class BaseMotion extends BaseElement {
     gameContext.restore()
   }
 
-  draw(gameContext) {
-    this.drawBefore && this.drawBefore(gameContext)
+  draw (gameContext) {
     const imgs = toArray(this.imgs)
     const img = imgs[this.index]
     this.drawElement(gameContext, img)
@@ -53,6 +51,5 @@ class BaseMotion extends BaseElement {
       this.coolTimeOfNumber = 0
       this.index = (this.index + 1) % imgs.length
     }
-    this.drawAfter && this.drawAfter(gameContext)
   }
 }

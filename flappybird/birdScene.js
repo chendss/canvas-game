@@ -4,7 +4,8 @@ class BirdScene extends BaseScene {
     this.n = 0
   }
 
-  reset() {
+  reset () {
+    // 重制场景
     super.reset()
     const npc = vagueObj(this.npcDict, 'pipe')
     for (let key of Object.keys(npc)) {
@@ -13,7 +14,7 @@ class BirdScene extends BaseScene {
     this.pipeInit()
   }
 
-  elementControl() {
+  elementControl () {
     this.registerAction('w', () => {
       this.player.jump()
     })
@@ -26,6 +27,7 @@ class BirdScene extends BaseScene {
   }
 
   birdInit = async () => {
+    // 鸟初始化
     const x = config.width / 4
     const y = config.height / 2
     const cfg = config.flappybird.bird
@@ -40,6 +42,7 @@ class BirdScene extends BaseScene {
   }
 
   landInit = async () => {
+    // 加载路
     const len = Math.ceil(config.width / 137)
     const h = config.height - 60
     for (let i = 0; i < len + 1; i++) {
@@ -48,20 +51,42 @@ class BirdScene extends BaseScene {
     }
   }
 
+  lastPipeX = (pipeX) => {
+    const pipeDict = vagueObj(this.npcDict, 'pipeTop')
+    const pipes = Object.values(pipeDict)
+    const len = pipes.length
+    const result = pipes[len - 1]
+    return pipeX || result.x
+  }
+
+  addPipe = async (pipeX) => {
+    // 加载一组水管
+    const cfg = config.flappybird.pipe
+    const lastPipeX = this.lastPipeX(pipeX)
+    const { intervalX, intervalY } = config.flappybird.pipe
+    const intervalPipeX = randomRange(intervalX.min, intervalX.max)
+    const intervaPipelY = randomRange(intervalY.min, intervalY.max)
+    const pipX = lastPipeX + intervalPipeX + 50
+    const topY = randomRange(-(320 * 2 - config.height + 100), 0)
+    const bottomY = 320 + topY + intervaPipelY
+    let pipeBottom = await Pipe.new(pipX, bottomY, cfg)
+    let pipeTop = await Pipe.new(pipX, topY, cfg)
+    this.addNpc(`pipeTop${this.n++}`, pipeTop)
+    this.addNpc(`pipeBottom${this.n++}`, pipeBottom)
+  }
+
   pipeInit = async () => {
+    // 水管初始化
     const birdX = this.player.x
     const x = randomRange(birdX + 100, config.width)
-    const cfg = config.flappybird.pipe
     const intervalX = randomRange(100, 150)
     for (let i = 0; i < 10; i++) {
-      const intervalY = randomRange(100, 200)
-      const pipX = x + i * (intervalX + 50)
-      const topY = randomRange(-(320 * 2 - config.height + 100), 0)
-      const bottomY = 320 + topY + intervalY
-      let pipeBottom = await Pipe.new(pipX, bottomY, cfg)
-      let pipeTop = await Pipe.new(pipX, topY, cfg)
-      this.addNpc(`pipeTop${this.n++}`, pipeTop)
-      this.addNpc(`pipeBottom${this.n++}`, pipeBottom)
+      if (i == 0) {
+        const pipX = x + i * (intervalX + 50)
+        await this.addPipe(pipX)
+      } else {
+        await this.addPipe()
+      }
     }
   }
 
@@ -71,24 +96,8 @@ class BirdScene extends BaseScene {
     this.elementControl()
   }
 
-  addPipe = async () => {
-    const pipeDict = vagueObj(this.npcDict, 'pipeTop')
-    const pipes = Object.values(pipeDict)
-    const cfg = config.flappybird.pipe
-    const intervalX = randomRange(100, 150)
-    const len = pipes.length
-    const lastPipe = pipes[len - 1]
-    const intervalY = randomRange(100, 200)
-    const pipX = lastPipe.x + intervalX + 50
-    const topY = randomRange(-(320 * 2 - config.height + 100), 0)
-    const bottomY = 320 + topY + intervalY
-    let pipeBottom = await Pipe.new(pipX, bottomY, cfg)
-    let pipeTop = await Pipe.new(pipX, topY, cfg)
-    this.addNpc(`pipeTop${this.n++}`, pipeTop)
-    this.addNpc(`pipeBottom${this.n++}`, pipeBottom)
-  }
-
-  drawPipe = async () => {
+  runPipe = async () => {
+    // 检测pipe的状况
     const birdX = this.player.x
     const pipeDict = vagueObj(this.npcDict, 'pipe')
     for (let key of Object.keys(pipeDict)) {
@@ -96,7 +105,7 @@ class BirdScene extends BaseScene {
       if (pipe.x >= birdX) {
         return
       } else if (pipe.x <= -pipe.width) {
-        if (key.includes('top')) {
+        if (key.includes('pipeTop')) {
           await this.addPipe()
         }
         delete this.npcDict[key]
@@ -104,11 +113,11 @@ class BirdScene extends BaseScene {
     }
   }
 
-  drawLife() { }
+  drawLife () { }
 
   draw = () => {
     this.drawBase()
     this.birdObstacles()
-    this.drawPipe()
+    this.runPipe()
   }
 }

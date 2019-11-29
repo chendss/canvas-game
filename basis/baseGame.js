@@ -8,27 +8,27 @@ class BaseGame {
     this.sceneDict = {}
     this.context = canvas.getContext('2d')
     this.canvas = canvas
-    this.startAndEndScene()
     this.runPointer = null
     this.sceneKey = 'start'
     this.actions = {}
     this.runStatus = true
-    this.bindGameControl()
     this.context.fillStyle = 'red'
-    this.createScene()
     this.extraTitle = {
       start: '',
       end: ''
     }
+    this.createScene()
+    this.bindGameControl()
   }
 
-  static new(canvas) {
+  static new (canvas) {
     const g = new this(canvas)
     g.init()
+    g.startAndEndScene()
     return g
   }
 
-  get status() {
+  get status () {
     // wait-等待开始,ing-进行中 over-游戏结束 游戏状态
     const dict = {
       start: 'wait',
@@ -37,15 +37,16 @@ class BaseGame {
     return dict[this.sceneKey] || 'ing'
   }
 
-  get scene() {
+  get scene () {
     return this.sceneDict[this.sceneKey]
   }
 
-  get gameSpeed() {
+  get gameSpeed () {
     return 1000 / config.fps
   }
 
   startAndEndScene = () => {
+    log('popop', this)
     this.sceneDict.start = new GameTitle(this.canvas)
     this.sceneDict.start.title = `按k开始游戏${this.extraTitle.start}`
     this.sceneDict.end = new GameTitle(this.canvas)

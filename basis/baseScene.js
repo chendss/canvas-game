@@ -17,7 +17,7 @@ class BaseScene {
     this.player = null
   }
 
-  get gameContext() {
+  get gameContext () {
     if (this.canvas == null) {
       return null
     }
@@ -44,7 +44,7 @@ class BaseScene {
     return result
   }
 
-  reset() {
+  reset () {
     this.status = null
     this.fraction = 0
     const elementList = Object.values(this.elementDict)
@@ -54,12 +54,8 @@ class BaseScene {
     }
   }
 
-	/**
-	 * 注册场景 控制元素的执行函数
-	 *
-	 * @memberof BaseScene
-	 */
   registerAction = (key, callback) => {
+    // 注册场景 控制元素的执行函数
     this.actions[key] = callback
     bindDown(key, this.keyDown)
     bindUp(key, this.keyUp)
@@ -129,7 +125,7 @@ class BaseScene {
     this.gameContext.fillText(msg, 100, 20)
   }
 
-  drawLife() {
+  drawLife () {
     if (this.player == null) return
     const life = this.player.life
     const meetOfNumber = this.player.meetOfNumber
@@ -138,6 +134,7 @@ class BaseScene {
   }
 
   boom = (itemKey) => {
+    // 当爆炸的时候，替代元素并且绘制火花
     const itemDict = vagueObj(this.npcDict, itemKey)
     for (let key of Object.keys(itemDict)) {
       const item = this.npcDict[key]

@@ -6,12 +6,8 @@ class Npc extends BaseElement {
     this.obstacles = [] // 障碍物 - 撞到会反弹
   }
 
-	/**
-	 * 撞到墙上
-	 *
-	 * @memberof BaseElement
-	 */
   wallCollision () {
+    // 撞到墙上
     const boundary = this.boundary
     if (this.y >= this.boundary.y.max) {
       this.lifeControl(this.life - 1)
@@ -24,12 +20,8 @@ class Npc extends BaseElement {
     }
   }
 
-	/**
-	 * 判断碰撞
-	 *
-	 * @memberof Npc
-	 */
   meetObstacles = () => {
+    // 判断碰撞
     for (let obstacle of this.obstacles) {
       if (collide(this, obstacle) && obstacle.status !== 'die') {
         obstacle.meetOfNumber += this.kill
