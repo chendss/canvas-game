@@ -1,6 +1,6 @@
 # 基于 cancas 实现的游戏框架
 
-[演示地址]([https://game.dashao.me](https://game.rainys.me:2/))
+[演示地址]([https://game.rainys.me:2](https://game.rainys.me:2)
 
 ![avatar](https://ae01.alicdn.com/kf/Ue98c6c74142a4aa283cddcbdbc72d662r.gif)
 
